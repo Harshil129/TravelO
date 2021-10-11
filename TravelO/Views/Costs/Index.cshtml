@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TravelO.Models.Cost>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivitiesCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccomodationCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AverageTotalCost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivitiesCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccomodationCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AverageTotalCost)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CostID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CostID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CostID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

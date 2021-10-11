@@ -8,6 +8,7 @@ namespace TravelO.Models
 {
     public class Province
     {
+        //A public class which holds the public variables and the validations
         [Key]
         [Display (Name="Province ID")]
         [Required(AllowEmptyStrings = false)]
@@ -18,6 +19,7 @@ namespace TravelO.Models
         [MaxLength(100)]
         public String Name { get; set; }
 
+        //Providing the parent-child and child-parent relationship between classes
         public List<Place> Places { get; set; }
     }
 }

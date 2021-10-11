@@ -7,21 +7,22 @@ using System.Threading.Tasks;
 
 namespace TravelO.Models
 {
+    //A public class which holds the public variables and the validations
     public class Place
     {
-        [Key]
+        [Key] //[Key] is use for the notation of Primary key
         [Required()]
         [Range (0,9999)]
-        [Display(Name = "Place ID")]
+        [Display(Name = "Place ID")] //the display tag will change the label to the given name
         public int PlaceID { get; set; }
 
         public int ProvinceID { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
+        [Required(AllowEmptyStrings = false)] //This will not allow any empty strings in the field
         [Display(Name = "Place Name")]
         public String Name { get; set; }
 
-        [MinLength(10), MaxLength(999)]
+        [MinLength(10), MaxLength(999)] //Providing range of class string
         public String Description { get; set; }
 
         [MinLength(2), MaxLength(999)]
@@ -37,6 +38,7 @@ namespace TravelO.Models
 
         public String Photo { get; set; }
 
+        //Providing the parent-child and child-parent relationship between classes
         public Province Province { get; set; }
 
         public List<ToDoList> ToDoLists { get; set; }

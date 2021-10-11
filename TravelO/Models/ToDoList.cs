@@ -8,6 +8,7 @@ namespace TravelO.Models
 {
     public class ToDoList
     {
+        //A public class which holds the public variables and the validations
         [Key]
         [Required()]
         [Range(0, 9999)]
@@ -38,6 +39,7 @@ namespace TravelO.Models
         [MinLength(2), MaxLength(40)]
         public String LastName { get; set; }
 
+        //Providing the parent-child and child-parent relationship between classes
         public Place Place { get; set; }
     }
 }
