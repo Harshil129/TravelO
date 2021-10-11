@@ -10,22 +10,23 @@ using TravelO.Models;
 
 namespace TravelO.Controllers
 {
-    public class ProvincesController : Controller
+    public class PlacesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProvincesController(ApplicationDbContext context)
+        public PlacesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Provinces
+        // GET: Places
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Provinces.ToListAsync());
+            var applicationDbContext = _context.Places.Include(p => p.Province);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Provinces/Details/5
+        // GET: Places/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace TravelO.Controllers
                 return NotFound();
             }
 
-            var province = await _context.Provinces
-                .FirstOrDefaultAsync(m => m.ProvinceID == id);
-            if (province == null)
+            var place = await _context.Places
+                .Include(p => p.Province)
+                .FirstOrDefaultAsync(m => m.PlaceID == id);
+            if (place == null)
             {
                 return NotFound();
             }
 
-            return View(province);
+            return View(place);
         }
 
-        // GET: Provinces/Create
+        // GET: Places/Create
         public IActionResult Create()
         {
+            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ProvinceID", "Name");
             return View();
         }
 
-        // POST: Provinces/Create
+        // POST: Places/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProvinceID,Name")] Province province)
+        public async Task<IActionResult> Create([Bind("PlaceID,ProvinceID,Name,Description,Activities,Restaurants,PerfectTimeToVisit,Photo")] Place place)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(province);
+                _context.Add(place);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(province);
+            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ProvinceID", "Name", place.ProvinceID);
+            return View(place);
         }
 
-        // GET: Provinces/Edit/5
+        // GET: Places/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace TravelO.Controllers
                 return NotFound();
             }
 
-            var province = await _context.Provinces.FindAsync(id);
-            if (province == null)
+            var place = await _context.Places.FindAsync(id);
+            if (place == null)
             {
                 return NotFound();
             }
-            return View(province);
+            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ProvinceID", "Name", place.ProvinceID);
+            return View(place);
         }
 
-        // POST: Provinces/Edit/5
+        // POST: Places/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProvinceID,Name")] Province province)
+        public async Task<IActionResult> Edit(int id, [Bind("PlaceID,ProvinceID,Name,Description,Activities,Restaurants,PerfectTimeToVisit,Photo")] Place place)
         {
-            if (id != province.ProvinceID)
+            if (id != place.PlaceID)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace TravelO.Controllers
             {
                 try
                 {
-                    _context.Update(province);
+                    _context.Update(place);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProvinceExists(province.ProvinceID))
+                    if (!PlaceExists(place.PlaceID))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace TravelO.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(province);
+            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ProvinceID", "Name", place.ProvinceID);
+            return View(place);
         }
 
-        // GET: Provinces/Delete/5
+        // GET: Places/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +130,31 @@ namespace TravelO.Controllers
                 return NotFound();
             }
 
-            var province = await _context.Provinces
-                .FirstOrDefaultAsync(m => m.ProvinceID == id);
-            if (province == null)
+            var place = await _context.Places
+                .Include(p => p.Province)
+                .FirstOrDefaultAsync(m => m.PlaceID == id);
+            if (place == null)
             {
                 return NotFound();
             }
 
-            return View(province);
+            return View(place);
         }
 
-        // POST: Provinces/Delete/5
+        // POST: Places/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var province = await _context.Provinces.FindAsync(id);
-            _context.Provinces.Remove(province);
+            var place = await _context.Places.FindAsync(id);
+            _context.Places.Remove(place);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProvinceExists(int id)
+        private bool PlaceExists(int id)
         {
-            return _context.Provinces.Any(e => e.ProvinceID == id);
+            return _context.Places.Any(e => e.PlaceID == id);
         }
     }
 }

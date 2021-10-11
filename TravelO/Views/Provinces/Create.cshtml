@@ -1,22 +1,17 @@
 ﻿@model TravelO.Models.Province
 
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Create";
 }
 
-<h2>Add a Province/ State/ Territory</h2>
+<h1>Create</h1>
 
-
+<h4>Province</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Add">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ProvinceID" class="control-label"></label>
-                <input asp-for="ProvinceID" class="form-control" />
-                <span asp-validation-for="ProvinceID" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />

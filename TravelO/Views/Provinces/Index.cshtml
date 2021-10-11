@@ -1,30 +1,35 @@
 ﻿@model IEnumerable<TravelO.Models.Province>
 
-<h1>Choose a PROVINCE</h1>
+@{
+    ViewData["Title"] = "Index";
+}
 
-<ul>
-    @foreach (var p in Model)
-    {
-        <li>
-            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="@p.Name"> @p.Name </a>
-        </li>
-    }
-    @*<li>
-            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Ontario"> Ontario </a>
-        </li>
-        <li>
-            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Quebec"> Quebec </a>
-        </li>
-        <li>
-            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Manitoba"> Manitoba </a>
-        </li>
-        <li>
-            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="New Brunswick"> New Brunswick </a>
-        </li>
-        <li>
-            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Saskatchewan"> Saskatchewan </a>
-        </li>
-        <li>
-            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Alberta"> Alberta </a>
-        </li>*@
-</ul>
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProvinceID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProvinceID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProvinceID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
