@@ -1,0 +1,30 @@
+﻿@model IEnumerable<TravelO.Models.Province>
+
+<h1>Choose a PROVINCE</h1>
+
+<ul>
+    @foreach (var p in Model)
+    {
+        <li>
+            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="@p.Name"> @p.Name </a>
+        </li>
+    }
+    @*<li>
+            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Ontario"> Ontario </a>
+        </li>
+        <li>
+            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Quebec"> Quebec </a>
+        </li>
+        <li>
+            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Manitoba"> Manitoba </a>
+        </li>
+        <li>
+            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="New Brunswick"> New Brunswick </a>
+        </li>
+        <li>
+            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Saskatchewan"> Saskatchewan </a>
+        </li>
+        <li>
+            <a asp-controller="Provinces" asp-action="Browse" asp-route-province="Alberta"> Alberta </a>
+        </li>*@
+</ul>
