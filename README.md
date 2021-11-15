@@ -5,7 +5,7 @@ NOTE - My web site runs completely well on the local machine but when I tried to
 Local Machine Link - https://localhost:44306/
 Azure Link - https://project-travelo.azurewebsites.net
 SmarterAsp Link - http://harshil2002-001-site1.etempurl.com/
-GitHub Link - 
+GitHub Link - https://github.com/Harshil129/TravelO.git
 
 Name : Harshil Soni
 Student No. : 200456136
