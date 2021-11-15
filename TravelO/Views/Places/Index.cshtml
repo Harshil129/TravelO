@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Places</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add New Place</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table sortable table-striped table-info">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.PerfectTimeToVisit)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Photo)
+                @Html.DisplayNameFor(model => model.Photo) 
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Province)
@@ -55,7 +55,14 @@
                 @Html.DisplayFor(modelItem => item.PerfectTimeToVisit)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Photo)
+                @if (item.Photo != null)
+                {
+                    <img src="~/img/places/@item.Photo" alt="Places Photo" class="thumb" />
+                }
+                else
+                {
+                    <img src="~/img/places/place-holder.jpg" alt="Places Photo" class="thumb" />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Province.Name)

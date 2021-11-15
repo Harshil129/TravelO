@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PlaceID" />
             <div class="form-group">
@@ -45,7 +45,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" class="form-control" />
+                <input asp-for="Photo" class="form-control" type="file" />
+                @if (Model.Photo != null)
+                {
+                    <img src="~/img/places/@Model.Photo" alt="Place Photo" class="thumb"/>
+                }
                 <span asp-validation-for="Photo" class="text-danger"></span>
             </div>
             <div class="form-group">

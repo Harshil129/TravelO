@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +25,7 @@ namespace TravelO.Controllers
         // GET: Places
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Places.Include(p => p.Province);
+            var applicationDbContext = _context.Places.Include(p => p.Province).OrderBy(p => p.Name);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -57,16 +60,39 @@ namespace TravelO.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlaceID,ProvinceID,Name,Description,Activities,Restaurants,PerfectTimeToVisit,Photo")] Place place)
+        public async Task<IActionResult> Create([Bind("PlaceID,ProvinceID,Name,Description,Activities,Restaurants,PerfectTimeToVisit")] Place place, IFormFile Photo)
         {
             if (ModelState.IsValid)
             {
+                if (Photo != null)
+                {
+                    var fileName = UploadPhoto(Photo);
+
+                    place.Photo = fileName;
+                }
+
                 _context.Add(place);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ProvinceID", "Name", place.ProvinceID);
             return View(place);
+        }
+
+        private static string UploadPhoto(IFormFile Photo)
+        {
+            var filePath = Path.GetTempFileName();
+
+            var fileName = Guid.NewGuid() + "-" + Photo.FileName;
+
+            var uploadPath = System.IO.Directory.GetCurrentDirectory() + "\\wwwroot\\img\\places\\" + fileName;
+
+            using (var stream = new FileStream(uploadPath, FileMode.Create))
+            {
+                Photo.CopyTo(stream);
+            }
+
+            return fileName;
         }
 
         // GET: Places/Edit/5
@@ -91,7 +117,7 @@ namespace TravelO.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlaceID,ProvinceID,Name,Description,Activities,Restaurants,PerfectTimeToVisit,Photo")] Place place)
+        public async Task<IActionResult> Edit(int id, [Bind("PlaceID,ProvinceID,Name,Description,Activities,Restaurants,PerfectTimeToVisit")] Place place, IFormFile Photo)
         {
             if (id != place.PlaceID)
             {
@@ -102,6 +128,12 @@ namespace TravelO.Controllers
             {
                 try
                 {
+                    if (Photo != null)
+                    {
+                        var fileName = UploadPhoto(Photo);
+                        place.Photo = fileName;
+                    }
+
                     _context.Update(place);
                     await _context.SaveChangesAsync();
                 }
