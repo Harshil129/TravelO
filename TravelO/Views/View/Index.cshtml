@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TravelO.Models.Province>
+
+@{ ViewData["Title"] = "View our WebSite";
+}
+
+<h1>View our WebSite</h1>
+
+<section class="row card-group">
+    @foreach (var p in Model)
+    {
+        <div class="col-sm-6 col-lg-4 mb-3">
+            <div class="card mb-4 text-center h-100">
+                <div class="card-body">
+                    <a asp-controller="View" asp-action="ViewByProvince" asp-route-id="@p.ProvinceID">
+                        @p.Name
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</section>

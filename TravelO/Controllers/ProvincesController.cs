@@ -11,7 +11,7 @@ using TravelO.Models;
 
 namespace TravelO.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class ProvincesController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -13,6 +13,7 @@ using TravelO.Models;
 
 namespace TravelO.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class PlacesController : Controller
     {
         private readonly ApplicationDbContext _context;
