@@ -123,17 +123,17 @@ namespace TravelO.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("404");
             }
 
             var province = await _context.Provinces
                 .FirstOrDefaultAsync(m => m.ProvinceID == id);
             if (province == null)
             {
-                return NotFound();
+                return View("404");
             }
 
-            return View(province);
+            return View("Details", province);
         }
 
         // POST: Provinces/Delete/5
