@@ -20,5 +20,21 @@ namespace TravelO.Controllers
             var provinces = _context.Provinces.OrderBy(p => p.Name).ToList();
             return View(provinces);
         }
+
+        //GET: /View/ViewByProvince/5
+        public IActionResult ViewByProvince(int id)
+        {
+            //get places in selected provinces
+            var places = _context.Places.Where(p => p.ProvinceID == id)
+                .OrderBy(p => p.Name).ToList();
+            
+
+            // get name of selected category
+            var province = _context.Provinces.Find(id);
+            ViewBag.Province = province.Name;
+
+            return View(places);
+        }
+
     }
 }

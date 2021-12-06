@@ -27,7 +27,7 @@ namespace TravelO.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Places.Include(p => p.Province).OrderBy(p => p.Name);
-            return View(await applicationDbContext.ToListAsync());
+            return View("Index", await applicationDbContext.ToListAsync());
         }
 
         // GET: Places/Details/5
@@ -35,7 +35,7 @@ namespace TravelO.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("404");
             }
 
             var place = await _context.Places
@@ -43,10 +43,10 @@ namespace TravelO.Controllers
                 .FirstOrDefaultAsync(m => m.PlaceID == id);
             if (place == null)
             {
-                return NotFound();
+                return View("404");
             }
 
-            return View(place);
+            return View("Details", place);
         }
 
         // GET: Places/Create

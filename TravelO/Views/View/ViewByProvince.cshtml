@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TravelO.Models.Place>
+
+@{ ViewData["Title"] = "Provinces"; }
+
+<h1>Places in @ViewBag.Province </h1>
+
+<section class="row card-group">
+
+    @foreach (var p in Model)
+    {
+        <div class="col-sm-6 col-lg-4 mb-3">
+            <div class="card mb-3 text-center h-100">
+                <div class="card-body">
+                    <h3>@p.Name</h3>
+                    <p></p>
+                    <h6>@p.Description</h6>
+                    <p></p>
+                    <h6><b>Perfect Time To Visit: </b>@p.PerfectTimeToVisit</h6>
+
+                    @if (p.Photo != null)
+                    {
+                        <img src="~/img/places/@p.Photo" alt="Place Pic" class="thumb" />
+                    }
+                    else
+                    {
+                        <img src="~/img/places/place-holder.jpg" alt="Place Pic" class="thumb" />
+                    }
+
+                    <form method="post" action="/View/AddToToDoList">
+                        <input type="hidden" name="PlaceId" value="@p.PlaceID" />
+                        <p></p>
+                        <button class="btn btn-primary">Add To To Do List</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    }
+
+</section>
